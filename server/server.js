@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
-const {generateMessage} = require('./utils/message');
+const {generateMessage,generateLocationMessage} = require('./utils/message');
 
 const publicPath = path.join(__dirname,'../public');
 const port = process.env.PORT || 3000;
@@ -25,14 +25,11 @@ io.on('connection',function(socket){
         io.emit('newMessage',generateMessage(message.from,message.text));   
         callback('This is from the srever');    
     });
-    // socket.on('createMessage',(message)=>{
-        //send messages to everyone but one specific user
-    //     socket.broadcast.emit('newMessage',{
-    //         from:message.from,
-    //         text:message.text,
-    //         createdAt: new Date().getTime()
-    //     }); 
-    // });
+
+    socket.on('createLocationMessage',(location)=>{
+        io.emit('newLocationMessage',generateLocationMessage('admin',location.latitude,location.longitude));
+    });
+
     socket.on('disconnect',function(){
         console.log('User left');
     });
