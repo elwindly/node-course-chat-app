@@ -13,15 +13,34 @@ var io = socketIO(server);
 app.use(express.static(publicPath));
 
 io.on('connection',function(socket){
+
+    socket.emit('newMessage',{
+        from:'Admin',
+        text:'welcome to the chat',
+        createdAt: new Date().getTime()
+    });
+    socket.broadcast.emit('newMessage',{
+        from:'Admin',
+        text:'New user joined',
+        createdAt: new Date().getTime()
+    });
     console.log('New user connected');
     socket.on('createMessage',(message)=>{
+        //send messages to everyone
         io.emit('newMessage',{
             from:message.from,
             text:message.text,
-            createdAt: new Date()
+            createdAt: new Date().getTime()
         });       
-    })
-
+    });
+    // socket.on('createMessage',(message)=>{
+        //send messages to everyone but one specific user
+    //     socket.broadcast.emit('newMessage',{
+    //         from:message.from,
+    //         text:message.text,
+    //         createdAt: new Date().getTime()
+    //     }); 
+    // });
     socket.on('disconnect',function(){
         console.log('User left');
     });
