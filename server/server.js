@@ -20,9 +20,10 @@ io.on('connection',function(socket){
 
     socket.broadcast.emit('newMessage',generateMessage('Admin','New user joined'));
     console.log('New user connected');
-    socket.on('createMessage',(message)=>{
+    socket.on('createMessage',(message,callback)=>{
         //send messages to everyone
-        io.emit('newMessage',generateMessage(message.from,message.text));       
+        io.emit('newMessage',generateMessage(message.from,message.text));   
+        callback('This is from the srever');    
     });
     // socket.on('createMessage',(message)=>{
         //send messages to everyone but one specific user
