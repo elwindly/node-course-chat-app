@@ -5,17 +5,10 @@
 <body>
     <p>Welcome to our chat app</p>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io();
-        socket.on('connect',()=>{
-            console.log('connected');
-        });
+    <script src="/js/index.js"></script>
 
-        socket.on('disconnect',()=>{
-            console.log('Disconnected from server');
-        });
 
-    </script>
+    
 </body>
 
 
