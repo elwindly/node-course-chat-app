@@ -23,7 +23,7 @@ io.on('connection',function(socket){
     socket.on('createMessage',(message,callback)=>{
         //send messages to everyone
         io.emit('newMessage',generateMessage(message.from,message.text));   
-        callback('This is from the srever');    
+        callback();    
     });
 
     socket.on('createLocationMessage',(location)=>{
